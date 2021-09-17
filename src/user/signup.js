@@ -10,14 +10,14 @@ const Signup = () => {
     success: false,
   });
 
-  const { name, email, password } = values;
+  const { name, email, password, error, success } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
-  const signup = (user) => {
-    fetch(`${API}/signup`, {
+  const signup = async (user) => {
+    return await fetch(`${API}/signup`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -26,7 +26,7 @@ const Signup = () => {
       body: JSON.stringify(user),
     })
       .then((response) => {
-        return response.json;
+        return response.json();
       })
       .catch((error) => {
         console.log(error);
@@ -35,7 +35,21 @@ const Signup = () => {
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    signup({ name, email, password });
+    setValues({ ...values, error: false });
+    signup({ name, email, password }).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error, success: false });
+      } else {
+        setValues({
+          ...values,
+          name: "",
+          email: "",
+          password: "",
+          error: "",
+          success: true,
+        });
+      }
+    });
   };
 
   const signUpForm = () => (
@@ -46,6 +60,7 @@ const Signup = () => {
           type="text"
           className="form-control"
           onChange={handleChange("name")}
+          value={name}
         ></input>
       </div>
       <div className="form-group">
@@ -54,6 +69,7 @@ const Signup = () => {
           type="Email"
           className="form-control"
           onChange={handleChange("email")}
+          value={email}
         ></input>
       </div>
       <div className="form-group">
@@ -62,6 +78,7 @@ const Signup = () => {
           type="Password"
           className="form-control"
           onChange={handleChange("password")}
+          value={password}
         ></input>
       </div>
       <button onClick={clickSubmit} type="submit" className="btn btn-primary">
@@ -70,12 +87,32 @@ const Signup = () => {
     </form>
   );
 
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
+
+  const showSuccess = () => (
+    <div
+      className="alert alert-info"
+      style={{ display: success ? "" : "none" }}
+    >
+      New account is crreated. Please signin
+    </div>
+  );
+
   return (
     <Layout
       title="Sign up"
       description="Sign up to Node React App"
       className="container col-md-8 offset-md-2"
     >
+      {showSuccess()}
+      {showError()}
       {signUpForm()}
       {JSON.stringify(values)}
     </Layout>
