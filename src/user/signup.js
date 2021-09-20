@@ -1,6 +1,7 @@
 import Layout from "../core/layout";
 import { useState } from "react";
-import { API } from "../config";
+import { signup } from "../auth";
+import { Link } from "react-router-dom";
 const Signup = () => {
   const [values, setValues] = useState({
     name: "",
@@ -14,23 +15,6 @@ const Signup = () => {
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
-  };
-
-  const signup = async (user) => {
-    return await fetch(`${API}/signup`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const clickSubmit = (event) => {
@@ -81,9 +65,11 @@ const Signup = () => {
           value={password}
         ></input>
       </div>
-      <button onClick={clickSubmit} type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <div className="mt-2">
+        <button onClick={clickSubmit} type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </div>
     </form>
   );
 
@@ -101,7 +87,7 @@ const Signup = () => {
       className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
-      New account is crreated. Please signin
+      New account is crreated. Please <Link to="/signin">Signin</Link>
     </div>
   );
 
