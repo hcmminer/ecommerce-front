@@ -1,4 +1,6 @@
 import Menu from "./menu";
+import "../styles.css";
+
 const Layout = ({
   title = "Title",
   description = "Description",

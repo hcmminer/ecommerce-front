@@ -88,6 +88,10 @@ const Signin = () => {
         return <Redirect to="/user/dashboard" />;
       }
     }
+    // neu mot user binh thuong co gang thay doi duong link thi buoc phai tro ve trang chu !
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
+    }
   };
 
   return (
