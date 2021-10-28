@@ -8,14 +8,13 @@ import Checkout from "./checkout";
 //!!!!!!!!!!!!!!!!!!!!!!!! ten file tuyet doi khong viet sai , pb hoa
 
 const Cart = () => {
-
-  // mang cua nhung san pham trong gi hang
+  // mang cua nhung san pham trong gio hang
   const [items, setItems] = useState([]);
 
   const [run, setRun] = useState(false);
 
   useEffect(() => {
-    console.log('MAX DEPTH ...');
+    console.log("MAX DEPTH ...");
     setItems(getCart());
   }, [run]);
 
@@ -59,7 +58,7 @@ const Cart = () => {
         <div className="col-6">
           <h2 className="mb-4">Your cart summary</h2>
           <hr />
-          <Checkout products={items} />
+          <Checkout products={items} setRun={setRun} run={run} />
         </div>
       </div>
     </Layout>
