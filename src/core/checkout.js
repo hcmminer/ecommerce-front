@@ -5,7 +5,7 @@ import {
   getProducts,
   getBraintreeClientToken,
   processPayment,
-  //   createOrder,
+  createOrder,
 } from "./apiCore";
 import { emptyCart } from "./carthelpers";
 import Card from "./card";
@@ -100,28 +100,28 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             // empty cart
             // create order
 
-            // const createOrderData = {
-            //   products: products,
-            //   transaction_id: response.transaction.id,
-            //   amount: response.transaction.amount,
-            //   address: deliveryAddress,
-            // };
+            const createOrderData = {
+              products: products,
+              transaction_id: response.transaction.id,
+              amount: response.transaction.amount,
+              address: deliveryAddress,
+            };
 
-            // createOrder(userId, token, createOrderData)
-            //   .then((response) => {
-            //     emptyCart(() => {
-            //       setRun(!run); // run useEffect in parent Cart
-            //       console.log("payment success and empty cart");
-            //       setData({
-            //         loading: false,
-            //         success: true,
-            //       });
-            //     });
-            //   })
-            //   .catch((error) => {
-            //     console.log(error);
-            //     setData({ loading: false });
-            //   });
+            createOrder(userId, token, createOrderData)
+              .then((response) => {
+                emptyCart(() => {
+                  setRun(!run); // run useEffect in parent Cart
+                  console.log("payment success and empty cart");
+                  setData({
+                    loading: false,
+                    success: true,
+                  });
+                });
+              })
+              .catch((error) => {
+                console.log(error);
+                setData({ loading: false });
+              });
           })
           .catch((error) => {
             console.log(error);
