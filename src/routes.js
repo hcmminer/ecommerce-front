@@ -11,6 +11,11 @@ import AddProduct from "./admin/addproduct";
 import Shop from "./core/shop";
 import Product from "./core/product";
 import Cart from "./core/cart";
+import Orders from "./admin/orders";
+import Profile from "./user/Profile";
+// 3, tiep theo khi click vao link do thi render ra cai j ?
+import ManageProducts from "./admin/ManageProducts";
+import UpdateProduct from "./admin/updateproduct";
 
 const Routes = () => {
   return (
@@ -26,6 +31,16 @@ const Routes = () => {
         <AdminRoute path="/create/product" exact component={AddProduct} />
         <Route path="/product/:productId" exact component={Product}></Route>
         <Route path="/cart" exact component={Cart}></Route>
+        <AdminRoute path="/admin/orders" exact component={Orders} />
+        <PrivateRoute path="/profile/:userId" exact component={Profile} />
+        // khi nhap dung link thi van can them quyen truy cap vao link do (kiem
+        tra quyen co trong localStorage cua trinh duyet)
+        <AdminRoute path="/admin/products" exact component={ManageProducts} />
+        <AdminRoute
+          path="/admin/product/update/:productId"
+          exact
+          component={UpdateProduct}
+        />
       </Switch>
     </BrowserRouter>
   );

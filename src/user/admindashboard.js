@@ -23,6 +23,17 @@ const adminDashboard = () => {
               Create product
             </Link>
           </li>
+          <li className="list-group-item">
+            <Link className="nav-link" to="/admin/orders">
+              View Orders
+            </Link>
+          </li>
+          {/* 1, dau tien tao ra cai link quan ly san pham */}
+          <li className="list-group-item">
+            <Link className="nav-link" to="/admin/products">
+              Manage Products
+            </Link>
+          </li>
         </ul>
       </div>
     );
